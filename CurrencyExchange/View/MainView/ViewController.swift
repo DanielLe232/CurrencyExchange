@@ -121,6 +121,14 @@ class ViewController: UIViewController {
             .orEmpty
             .bind(to: currencyViewModel.amountCurrencies)
             .disposed(by: disposeBag)
+        
+        currencyViewModel.errorCurrencies
+            .asObservable()
+            .subscribe { [unowned self](error) in
+                let alertController = UIAlertController(title: "\(error.element ?? "")", message: nil, preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                self.present(alertController, animated: true, completion: nil)
+        }.disposed(by: disposeBag)
     }
     
     
